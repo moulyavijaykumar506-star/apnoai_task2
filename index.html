@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moulya N V | Profile Card</title>
+
+  <!-- React 18 -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .profile-card {
+      transition: all 0.3s ease;
+    }
+
+    .light-mode {
+      background: #eff6ff;
+      color: #1e293b;
+    }
+
+    .dark-mode {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    .light-card {
+      background: white;
+      color: #1e293b;
+      border: 1px solid #bfdbfe;
+    }
+
+    .dark-card {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #334155;
+    }
+
+    .skill {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .dark-mode .skill {
+      background: #334155;
+      color: #bfdbfe;
+    }
+
+    .social-link {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .social-link:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const { useState } = React;
+
+    // PROFILE CARD COMPONENT
+
+    function ProfileCard({
+      name,
+      role,
+      bio,
+      skills,
+      avatar,
+      github,
+      email,
+      college,
+      semester,
+      graduation,
+      interest,
+      hobbies,
+      linkedinMessage
+    }) {
+
+      // React State
+      const [isDark, setIsDark] = useState(false);
+      const [isConnected, setIsConnected] = useState(false);
+
+      // Theme Toggle
+      const toggleTheme = () => {
+        setIsDark(!isDark);
+      };
+
+      // Connect Button
+      const toggleConnect = () => {
+        setIsConnected(!isConnected);
+      };
+
+      return (
+
+        <div className={`min-h-screen flex items-center justify-center p-5 transition-all duration-300 ${
+          isDark ? 'dark-mode' : 'light-mode'
+        }`}>
+
+          {/* Theme Toggle */}
+
+          <button
+            onClick={toggleTheme}
+            className="fixed top-5 right-5 px-4 py-2 rounded-full bg-blue-600 text-white shadow-lg"
+          >
+            {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
+
+          {/* Main Profile Card */}
+
+          <div className={`profile-card rounded-3xl shadow-2xl p-7 w-full max-w-lg ${
+            isDark ? 'dark-card' : 'light-card'
+          }`}>
+
+            {/* Profile Photo */}
+
+            <div className="text-center mb-5">
+
+              <img
+                src={avatar}
+                alt="Moulya's professional profile photo"
+                className="w-36 h-36 rounded-full object-cover mx-auto border-4 border-blue-400 shadow-lg"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'flex';
+                }}
+              />
+
+              <div
+                className="w-36 h-36 rounded-full mx-auto bg-blue-200 text-blue-800 items-center justify-center text-4xl font-bold"
+                style={{display: 'none'}}
+              >
+                M
+              </div>
+
+            </div>
+
+            {/* Name and Role */}
+
+            <div className="text-center mb-5">
+
+              <h1 className="text-3xl font-bold mb-2">
+                {name}
+              </h1>
+
+              <p className="text-blue-500 font-semibold text-lg">
+                {role}
+              </p>
+
+              <p className="text-sm mt-2 opacity-75">
+                {college}
+              </p>
+
+              <p className="text-sm mt-1 opacity-75">
+                {semester} | Expected Graduation: {graduation}
+              </p>
+
+            </div>
+
+            {/* About Me */}
+
+            <div className="mb-5">
+
+              <h2 className="text-xl font-bold text-blue-500 mb-2">
+                About Me
+              </h2>
+
+              <p className="text-sm leading-relaxed">
+                {bio}
+              </p>
+
+            </div>
+
+            {/* Skills */}
+
+            <div className="mb-5">
+
+              <h2 className="text-xl font-bold text-blue-500 mb-3">
+                My Skills
+              </h2>
+
+              <div className="flex flex-wrap gap-2">
+
+                {skills.map((skill, index) => (
+
+                  <span
+                    key={index}
+                    className="skill px-3 py-2 rounded-full text-sm font-medium"
+                  >
+                    {skill}
+                  </span>
+
+                ))}
+
+              </div>
+
+            </div>
+
+            {/* Career Interest */}
+
+            <div className="mb-5">
+
+              <h2 className="text-xl font-bold text-blue-500 mb-2">
+                Career Interest
+              </h2>
+
+              <p className="text-sm">
+                💻 {interest}
+              </p>
+
+            </div>
+
+            {/* Hobbies */}
+
+            <div className="mb-5">
+
+              <h2 className="text-xl font-bold text-blue-500 mb-2">
+                Interests & Hobbies
+              </h2>
+
+              <p className="text-sm">
+                {hobbies.join(' • ')}
+              </p>
+
+            </div>
+
+            {/* Connect Button */}
+
+            <button
+              onClick={toggleConnect}
+              className={`w-full py-3 rounded-xl font-bold mb-5 transition-all ${
+                isConnected
+                  ? 'bg-green-500 text-white'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {isConnected ? '✓ Connected' : 'Connect With Me'}
+            </button>
+
+            {/* Contact Details */}
+
+            <div className="mb-5">
+
+              <h2 className="text-xl font-bold text-blue-500 mb-3">
+                Contact Me
+              </h2>
+
+              <div className="flex flex-wrap justify-center gap-3">
+
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                >
+                  GitHub
+                </a>
+
+                <a
+                  href={`mailto:${email}`}
+                  className="social-link"
+                >
+                  Email Me
+                </a>
+
+              </div>
+
+            </div>
+
+            {/* LinkedIn Introduction */}
+
+            <div className="p-4 rounded-xl bg-blue-50 text-slate-700 border border-blue-200">
+
+              <h2 className="text-lg font-bold text-blue-700 mb-2">
+                My LinkedIn Journey
+              </h2>
+
+              <p className="text-sm leading-relaxed">
+                {linkedinMessage}
+              </p>
+
+            </div>
+
+            {/* Footer */}
+
+            <div className="text-center mt-6 pt-4 border-t border-blue-200">
+
+              <p className="text-sm font-medium">
+                Built with React 18 and Tailwind CSS
+              </p>
+
+              <p className="text-xs mt-2 opacity-70">
+                ApnoAI Internship Task 2 | Moulya N V
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      );
+
+    }
+
+    // PERSONAL INFORMATION (PROPS)
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+
+      <ProfileCard
+
+        name="Moulya N V"
+
+        role="Computer Science Student"
+
+        bio="I'm a Computer Science student interested in technology and web development. I enjoy learning new skills and building projects."
+
+        college="Malnad College of Engineering, Hassan, Karnataka"
+
+        semester="5th Semester"
+
+        graduation="2028"
+
+        skills={[
+          "Python",
+          "SQL",
+          "Java",
+          "Data Structures using C",
+          "Data Analysis with Excel",
+          "Artificial Intelligence"
+        ]}
+
+        interest="Web Development"
+
+        hobbies={[
+          "Exploring AI",
+          "Reading"
+        ]}
+
+        avatar="./myimage.jpeg"
+
+        github="https://github.com/moulyavijaykumar506-star"
+
+        email="moulyavijaykumar506@gmail.com"
+
+        linkedinMessage="I'm currently exploring new opportunities to learn, grow, and build my skills through practical experience. As I'm beginning my LinkedIn journey, I hope to make my first post about my internship experience, the projects I complete, and the knowledge I gain along the way. Every new experience is a step towards my future!"
+
+      />
+
+    );
+
+  </script>
+
+</body>
+</html>
